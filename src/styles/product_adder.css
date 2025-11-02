@@ -2,7 +2,7 @@
   align-self: flex-end;
   height: fit-content;
   width: fit-content;
-  background-color: #1d84f2;
+  background-color: #242424;
   color: #fff;
   padding: 10px 25px;
   border: 1px solid rgba(145, 145, 145, 0.2);
@@ -10,16 +10,16 @@
   font-weight: 600;
   font-size: 16px;
   text-align: center;
-  cursor: pointer;
 }
 
 .btn_add_product:hover {
-  background-color: #0061c8;
+  background-color: #424242;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .btn_add_product:active {
-  background-color: #0051a8;
+  background-color: #242424;
 }
 
 .new-product-form {

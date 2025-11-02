@@ -1,0 +1,126 @@
+.cart_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #8888883d;
+  width: 380px;
+  height: 132px;
+  border-radius: 15px;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.cart_item .item_image {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart_item .item_info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+.item_info .item_header {
+  display: flex;
+  flex-direction: column;
+}
+
+.item_header .item_name {
+  text-align: start;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 3px;
+  color: #242424;
+}
+
+.item_header .item_category {
+  text-align: start;
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.item_info .item_body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item_body .item_subtotal {
+  text-align: end;
+  font-size: 16px;
+  font-weight: 700;
+  color: #242424;
+}
+
+.item_body span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.item_body .item_stock {
+  text-align: start;
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+.quantity_controller {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity_controller button {
+  border: 1px solid #2424240a;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.quantity_controller button:hover {
+  color: #ffffff;
+  background-color: #424242;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.quantity_controller button:active {
+  background-color: #242424;
+}
+
+.quantity_controller input {
+  width: 30px;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+.cart_item .btn_remove_item{
+    height: 100%;
+    width: 60px;
+    border: none;
+    background-color: #ff0000;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.cart_item .btn_remove_item:hover{
+    background-color: #c90000;
+}
+
+.cart_item .btn_remove_item:active{
+    background-color: #8a0000;
+}
