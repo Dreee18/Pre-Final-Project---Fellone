@@ -1,6 +1,7 @@
-import { useState, type ChangeEvent } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import "../styles/card.css";
 import Default_Image from "../assets/images/default_image.png";
+import { ProductContext } from "../Context";
 
 type product_info = {
   image?: string;
@@ -18,6 +19,9 @@ type product_object = {
 };
 
 function Card({ product }: product_object) {
+  const context = useContext(ProductContext);
+  if (!context) return null;
+  const { cart, setCart } = context;
   const [quantity, setQuantity] = useState(0);
 
   const formatted_price = product.price.toLocaleString("en-US", {
@@ -54,6 +58,20 @@ function Card({ product }: product_object) {
       stars.push(<i key={i} className="fa-solid fa-star"></i>);
     }
     return stars;
+  };
+
+  const handleCartAdding = () => {
+    setCart((prevCartItems) => {
+      const existingIndex = prevCartItems.findIndex((item) => item.product.name === product.name);
+
+      if (existingIndex >= 0) {
+        const updatedCart = [...prevCartItems];
+        updatedCart[existingIndex] = { ...updatedCart[existingIndex], product, quantity };
+        return updatedCart;
+      }
+
+      return [...prevCartItems, { product, quantity }];
+    });
   };
 
   return (
@@ -99,7 +117,7 @@ function Card({ product }: product_object) {
           </button>
         </div>
 
-        <button className="btn-add-to-cart">
+        <button className="btn-add-to-cart" onClick={() => handleCartAdding()}>
           <i className="fa-solid fa-cart-shopping"></i>
         </button>
       </div>

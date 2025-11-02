@@ -1,10 +1,13 @@
-import './styles/app.css'
-import Product_List from './components/Product_List'
+import "./styles/app.css";
+import Product_List from "./components/Product_List";
+import { ProductProvider } from "./Context";
 
 function App() {
   return (
-    <Product_List/>
-  )
+    <ProductProvider>
+      <Product_List />
+    </ProductProvider>
+  );
 }
 
-export default App
+export default App;

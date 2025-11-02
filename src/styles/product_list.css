@@ -1,117 +1,17 @@
-.products-container {
+.products_container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 20px;
   justify-content: start;
   padding: 20px;
 }
 
-.products-container .new-product-form {
+.products_container .product_list {
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px dashed #ccc;
-  border-radius: 15px;
+  gap: 20px;
+  justify-content: start;
   padding: 20px;
-  width: 350px;
-  gap: 8px;
-  background-color: #fff;
-  z-index: 999;
-}
-
-.new-product-form .form-title {
-  text-align: center;
-  margin: 12px 0;
-}
-
-.new-product-form label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.new-product-form input,
-.new-product-form textarea {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.new-product-form textarea {
-  resize: none;
-  height: 60px;
-}
-
-.new-product-form input:hover,
-.new-product-form textarea:hover {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.new-product-form .numeric_row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  margin-bottom: 12px;
-}
-
-.new-product-form .numeric_row .numeric_field {
-  display: flex;
-  flex-direction: column;
-  min-width: 50px;
-  flex: 1 0 50px;
-}
-
-.new-product-form .form-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 12px;
-  gap: 8px;
-}
-
-.new-product-form .btn-add-product {
-  flex: 0.8;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.new-product-form .btn-add-product:hover {
-  background-color: #218838;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.new-product-form .btn-add-product:active {
-  background-color: #1e7e34;
-}
-
-.new-product-form .btn-clear-form {
-  flex: 0.2;
-  padding: 10px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.new-product-form .btn-clear-form:hover {
-  background-color: #c82333;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.new-product-form .btn-clear-form:active {
-  background-color: #bd2130;
+  border: 1px solid #888;
+  border-radius: 15px;
 }
