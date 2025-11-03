@@ -1,19 +1,27 @@
 import "../styles/cart_item.css";
 import DefaultImage from "../assets/images/default_image.png";
-import { useContext, type ChangeEvent } from "react";
+import { useContext, useEffect, type ChangeEvent } from "react";
 import { ProductContext } from "../Context";
 
 function Cart_Item() {
   const context = useContext(ProductContext);
   if (!context) return null;
-  const { cart, setCart } = context;
+  const { cart, setCart, totalPrice, setTotalPrice } = context;
 
   const RemoveItem = (index: number) => {
     setCart((prevCart) => prevCart.filter((_, i) => i !== index));
   };
 
+  useEffect(() => {
+    const total = cart.reduce((acc, item) => {
+      return acc + item.product.price * item.quantity;
+    }, 0);
+
+    setTotalPrice(total);
+  }, [cart, setTotalPrice]);
+
   return (
-    <ul className="cart_list">
+    <>
       {cart.map((item, index) => (
         <li key={index} className="cart_item">
           <img
@@ -24,7 +32,7 @@ function Cart_Item() {
           <div className="item_info">
             <div className="item_header">
               <h3 className="item_name">{item.product.name}</h3>
-              <p className="item_category">{item.product.category}</p>
+              <p className="item_category">{item.product.category[0]}</p>
             </div>
             <div className="item_info">
               <div className="item_body">
@@ -39,7 +47,7 @@ function Cart_Item() {
                 </h4>
 
                 <span>
-                  <p className="item_stock">Stocks: {item.product.stock}</p>
+                  <p className={item.product.stock < 5 ? "item_stock_low" : "item_stock"}>Stock: {item.product.stock}</p>
                   <div className="quantity_controller">
                     <button
                       className="btn_decrement"
@@ -112,7 +120,7 @@ function Cart_Item() {
           </button>
         </li>
       ))}
-    </ul>
+    </>
   );
 }
 

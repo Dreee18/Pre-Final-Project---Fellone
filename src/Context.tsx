@@ -22,6 +22,9 @@ type ProductContextType = {
 
   cart: cart_item_info[];
   setCart: React.Dispatch<React.SetStateAction<cart_item_info[]>>
+
+  totalPrice: number
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>
 };
 
 export const ProductContext = createContext<ProductContextType | undefined>(
@@ -31,9 +34,10 @@ export const ProductContext = createContext<ProductContextType | undefined>(
 export const ProductProvider = ({children}: {children: React.ReactNode}) => {
   const [product, setProduct] = useState<product_info[]>([]);
   const [cart, setCart] = useState<cart_item_info[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0)
 
   return (
-    <ProductContext.Provider value={{ product, setProduct, cart, setCart }}>
+    <ProductContext.Provider value={{ product, setProduct, cart, setCart, totalPrice, setTotalPrice }}>
       {children}
     </ProductContext.Provider>
   );

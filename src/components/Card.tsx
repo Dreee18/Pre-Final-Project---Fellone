@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import "../styles/card.css";
 import Default_Image from "../assets/images/default_image.png";
 import { ProductContext } from "../Context";
@@ -69,7 +69,6 @@ function Card({ product }: product_object) {
               ? product.stock
               : updatedCart[existingIndex].quantity + quantity,
         };
-        console.log(updatedCart[existingIndex].quantity);
         return updatedCart;
       } else {
         return [...prevCartItems, { product, quantity }];
@@ -79,11 +78,13 @@ function Card({ product }: product_object) {
 
   return (
     <div className="card_container">
-      <img
-        className="product_image"
-        src={product.image ? product.image : Default_Image}
-        alt={product.name}
-      />
+      <div className="image_container">
+        <img
+          className="product_image"
+          src={product.image ? product.image : Default_Image}
+          alt={product.name}
+        />
+      </div>
 
       <div className="card_header">
         <span>
@@ -92,7 +93,13 @@ function Card({ product }: product_object) {
         </span>
 
         <span>
-          <p className="product_stock">Stock:{product.stock}</p>
+          <p
+            className={
+              product.stock < 5 ? "product_stock_low" : "product_stock"
+            }
+          >
+            Stock:{product.stock}
+          </p>
           <h4 className="product_price">{formatted_price}</h4>
         </span>
       </div>
@@ -104,7 +111,7 @@ function Card({ product }: product_object) {
           <button
             className="btn_decrement"
             onClick={() => setQuantity(quantity - 1)}
-            disabled={quantity === 0}
+            disabled={quantity === 0 || product.stock === 0}
           >
             <i className="fa-solid fa-minus"></i>
           </button>
@@ -117,18 +124,23 @@ function Card({ product }: product_object) {
             }
             min={0}
             max={product.stock}
+            disabled={product.stock === 0}
           />
 
           <button
             className="btn_increment"
             onClick={() => setQuantity(quantity + 1)}
-            disabled={quantity === product.stock}
+            disabled={quantity === product.stock || product.stock === 0}
           >
             <i className="fa-solid fa-plus"></i>
           </button>
         </div>
 
-        <button className="btn_add_to_cart" onClick={() => handleCartAdding()}>
+        <button
+          className="btn_add_to_cart"
+          onClick={() => handleCartAdding()}
+          disabled={product.stock === 0}
+        >
           <i className="fa-solid fa-cart-shopping"></i>
         </button>
       </div>
