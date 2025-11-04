@@ -2,6 +2,7 @@ import { useContext, useState, type ChangeEvent } from "react";
 import "../styles/card.css";
 import Default_Image from "../assets/images/default_image.png";
 import { ProductContext } from "../Context";
+import Product_Info from "./Product_Info";
 
 type product_info = {
   image?: string;
@@ -23,6 +24,7 @@ function Card({ product }: product_object) {
   if (!context) return null;
   const { setCart } = context;
   const [quantity, setQuantity] = useState(0);
+  const [toggleDetailedInfo, setToggleDetailedInfo] = useState(false);
 
   const formatted_price = product.price.toLocaleString("en-US", {
     style: "currency",
@@ -77,74 +79,88 @@ function Card({ product }: product_object) {
   };
 
   return (
-    <div className="card_container">
-      <div className="image_container">
-        <img
-          className="product_image"
-          src={product.image ? product.image : Default_Image}
-          alt={product.name}
-        />
-      </div>
-
-      <div className="card_header">
-        <span>
-          <p className="product_category">{product.category[0]}</p>
-          <h3 className="product_name">{product.name}</h3>
-        </span>
-
-        <span>
-          <p
-            className={
-              product.stock < 5 ? "product_stock_low" : "product_stock"
-            }
-          >
-            Stock:{product.stock}
-          </p>
-          <h4 className="product_price">{formatted_price}</h4>
-        </span>
-      </div>
-
-      <div className="card_rating">{handleRating()}</div>
-
-      <div className="card_body">
-        <div className="product_quantity">
-          <button
-            className="btn_decrement"
-            onClick={() => setQuantity(quantity - 1)}
-            disabled={quantity === 0 || product.stock === 0}
-          >
-            <i className="fa-solid fa-minus"></i>
-          </button>
-
-          <input
-            type="number"
-            value={quantity}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              handleQuantityChange(Number(event.target.value))
-            }
-            min={0}
-            max={product.stock}
-            disabled={product.stock === 0}
+    <>
+      {toggleDetailedInfo && (
+        <Product_Info product={product} OnClickClose={(value) => setToggleDetailedInfo(value)}/>
+      )}
+      <div className="card_container">
+        <div className="image_container">
+          <img
+            className="product_image"
+            src={product.image ? product.image : Default_Image}
+            alt={product.name}
           />
 
           <button
-            className="btn_increment"
-            onClick={() => setQuantity(quantity + 1)}
-            disabled={quantity === product.stock || product.stock === 0}
+            className="view_details"
+            onClick={() =>
+              setToggleDetailedInfo((state) => (state ? false : true))
+            }
           >
-            <i className="fa-solid fa-plus"></i>
+            View Details
           </button>
         </div>
 
-        <button
-          className="btn_add_to_cart"
-          onClick={() => handleCartAdding()}
-          disabled={product.stock === 0}
-        >
-          <i className="fa-solid fa-cart-shopping"></i>
-        </button>
+        <div className="card_header">
+          <span>
+            <p className="product_category">{product.category[0]}</p>
+            <h3 className="product_name">{product.name}</h3>
+          </span>
+
+          <span>
+            <p
+              className={
+                product.stock < 5 ? "product_stock_low" : "product_stock"
+              }
+            >
+              Stock:{product.stock}
+            </p>
+            <h4 className="product_price">{formatted_price}</h4>
+          </span>
+        </div>
+
+        <div className="card_rating">{handleRating()}</div>
+
+        <div className="card_body">
+          <div className="product_quantity">
+            <button
+              className="btn_decrement"
+              onClick={() => setQuantity(quantity - 1)}
+              disabled={quantity === 0 || product.stock === 0}
+            >
+              <i className="fa-solid fa-minus"></i>
+            </button>
+
+            <input
+              type="number"
+              value={quantity}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                handleQuantityChange(Number(event.target.value))
+              }
+              min={0}
+              max={product.stock}
+              disabled={product.stock === 0}
+            />
+
+            <button
+              className="btn_increment"
+              onClick={() => setQuantity(quantity + 1)}
+              disabled={quantity === product.stock || product.stock === 0}
+            >
+              <i className="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <button
+            className="btn_add_to_cart"
+            onClick={() => handleCartAdding()}
+            disabled={product.stock === 0}
+          >
+            <i className="fa-solid fa-cart-shopping"></i>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

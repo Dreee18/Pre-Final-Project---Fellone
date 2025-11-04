@@ -17,7 +17,6 @@ import SamsungGalaxyS23 from "../assets/images/SamsungGalaxyS23.png";
 import SonyWH1000XM5 from "../assets/images/SonyWH1000XM5.png";
 import LGUltragear27 from "../assets/images/LGUltraGear27.png";
 import AppleWatchSeries9 from "../assets/images/AppleWatchSeries9.png";
-
 function Product_List() {
   const context = useContext(ProductContext);
   if (!context) return null;
@@ -293,7 +292,7 @@ function Product_List() {
         ) : (
           product.map(
             (product, index) =>
-              product.stock > 0 && <Card key={index} product={product} />
+              product.stock > 0 && <Card key={index} product={product}/>
           )
         )}
       </div>
