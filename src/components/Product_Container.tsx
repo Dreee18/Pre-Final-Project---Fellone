@@ -18,14 +18,18 @@ import SonyWH1000XM5 from "../assets/images/SonyWH1000XM5.png";
 import LGUltragear27 from "../assets/images/LGUltraGear27.png";
 import AppleWatchSeries9 from "../assets/images/AppleWatchSeries9.png";
 
-function Product_List() {
+type ProductContainerType = {
+  searchFilter: string;
+};
+
+function Product_List({ searchFilter }: ProductContainerType) {
   const context = useContext(ProductContext);
   if (!context) return null;
   const { product, setProduct } = context;
   const uniqueCategories = Array.from(
     new Set(product.map((p) => p.category[0]))
   );
-  const [filterProduct, setFilterProduct] = useState("All");
+  const [filterProduct, setFilterProduct] = useState("ALL");
 
   let staticProducts = [
     {
@@ -281,28 +285,30 @@ function Product_List() {
   }, []);
 
   const handleFiltering = () => {
-    if (filterProduct.toUpperCase() !== "ALL") {
-      const filteredProducts = product.filter(
-        (item) => item.category.includes(filterProduct)
-      );
+    const FilterBySearch = searchFilter.trim().toUpperCase();
+    const FilterByCategory = filterProduct.trim().toUpperCase();
 
-      console.log(filteredProducts.length)
-      return filteredProducts.map((item, index) =>
-        filteredProducts.length === 0 ? (
-          <p>Product List is Empty</p>
-        ) : (
-          item.stock > 0 && <Card key={index} product={item} />
-        )
-      );
-    } else if (filterProduct.toUpperCase() === "ALL") {
-      return product.map((item, index) =>
-        product.length === 0 ? (
-          <p>Product List is Empty</p>
-        ) : (
-          item.stock > 0 && <Card key={index} product={item} />
-        )
+    let filtered = product;
+
+    if (FilterByCategory !== "ALL" && FilterByCategory !== "") {
+      filtered = filtered.filter((item) =>
+        item.category.some((cat) => cat.toUpperCase() === FilterByCategory || cat.toUpperCase().includes(FilterByCategory))
       );
     }
+
+    if (FilterBySearch !== "") {
+      filtered = filtered.filter(
+        (item) =>
+          item.name.toUpperCase().includes(FilterBySearch) ||
+          item.category.some((cat) => cat.toUpperCase().includes(FilterBySearch))
+      );
+    }
+
+    filtered = filtered.filter((item) => item.stock > 0);
+
+    if (filtered.length === 0) return <p>Product List is Empty</p>;
+
+    return filtered.map((item, index) => <Card key={item.name + "-" + index} product={item} />);
   };
 
   return (
@@ -314,7 +320,7 @@ function Product_List() {
             setFilterProduct(event.target.value)
           }
         >
-          <option value="All">All</option>
+          <option value="ALL">All</option>
           {uniqueCategories.map((cat, index) => (
             <option key={index} value={cat}>
               {cat}

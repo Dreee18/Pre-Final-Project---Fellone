@@ -1,13 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useState, type ChangeEvent} from "react";
 import "../styles/navbar.css";
 import { ProductContext } from "../Context";
 import Cart_Item from "./Cart_List";
 
-function NavBar() {
+type SearchFunction = {
+  OnSearch: (text: string) => void;
+};
+
+function NavBar({ OnSearch }: SearchFunction) {
   const context = useContext(ProductContext);
   if (!context) return null;
   const { setProduct, cart, setCart, totalPrice } = context;
   const [toggleCart, setToggleCart] = useState(Boolean);
+  const [searchFilter, setSearchFilter] = useState("");
 
   const HandleCheckOut = () => {
     cart.forEach((item) => {
@@ -39,12 +44,20 @@ function NavBar() {
   return (
     <nav className="navbar_container">
       <a className="navbar_brand">P.M.A.</a>
-      <form className="navbar_search">
-        <input className="input_search" type="search" placeholder="Search" />
-        <button className="btn_search" type="submit">
+      <div className="navbar_search">
+        <input
+          className="input_search"
+          type="text"
+          placeholder="Search"
+          value={searchFilter}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setSearchFilter(event.target.value.trim())
+          }
+        />
+        <button className="btn_search" type="button" onClick={() => OnSearch(searchFilter)}>
           Search
         </button>
-      </form>
+      </div>
 
       <button
         className="view_cart"
