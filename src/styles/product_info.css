@@ -129,7 +129,7 @@
   display: block;
   margin-top: 16px;
   font-size: 18px;
-  color: #888888;
+  font-weight: 700;
 }
 
 .product_info_container .product_details > textarea {
@@ -139,19 +139,25 @@
   border: none;
   text-align: justify;
   line-height: 1.5;
+  font-weight: 400;
+  font-size: 14px;
   padding: 6px 10px;
 }
 
 .product_info_container .specification_list{
   height: 600px;
-  padding: 0 0 0 20px;
+  padding: 0;
   margin: 0;
   overflow-y: auto;
 }
 
 .product_info_container .specification_list > .product_specification {
-  margin: 6px 0;
-  font-size: 14px;
+  margin: 4px 0;
+  font-size: 16px;
+  border: 1px solid #242424;
+  border-radius: 15px;
+  padding: 4px 6px;
+  text-indent: 12px;
 }
 
 /* Action Buttons Section */

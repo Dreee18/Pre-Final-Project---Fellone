@@ -122,7 +122,7 @@ function Product_Info(
             readOnly
           />
 
-          <label htmlFor="specification">Product Specifications</label>
+          <label>Product Specifications</label>
           <ul className="specification_list">
             {product.specifications.map((value, index) => (
               <li key={index} className="product_specification">

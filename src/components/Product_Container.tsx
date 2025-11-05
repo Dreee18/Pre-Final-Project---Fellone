@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import "../styles/product_container.css";
 import Card from "./Card";
 import ProductAdder from "./ProductAdder";
@@ -17,10 +17,15 @@ import SamsungGalaxyS23 from "../assets/images/SamsungGalaxyS23.png";
 import SonyWH1000XM5 from "../assets/images/SonyWH1000XM5.png";
 import LGUltragear27 from "../assets/images/LGUltraGear27.png";
 import AppleWatchSeries9 from "../assets/images/AppleWatchSeries9.png";
+
 function Product_List() {
   const context = useContext(ProductContext);
   if (!context) return null;
   const { product, setProduct } = context;
+  const uniqueCategories = Array.from(
+    new Set(product.map((p) => p.category[0]))
+  );
+  const [filterProduct, setFilterProduct] = useState("All");
 
   let staticProducts = [
     {
@@ -275,26 +280,67 @@ function Product_List() {
     });
   }, []);
 
+  const handleFiltering = () => {
+    if (filterProduct.toUpperCase() !== "ALL") {
+      const filteredProducts = product.filter(
+        (item) => item.category.includes(filterProduct)
+      );
+
+      console.log(filteredProducts.length)
+      return filteredProducts.map((item, index) =>
+        filteredProducts.length === 0 ? (
+          <p>Product List is Empty</p>
+        ) : (
+          item.stock > 0 && <Card key={index} product={item} />
+        )
+      );
+    } else if (filterProduct.toUpperCase() === "ALL") {
+      return product.map((item, index) =>
+        product.length === 0 ? (
+          <p>Product List is Empty</p>
+        ) : (
+          item.stock > 0 && <Card key={index} product={item} />
+        )
+      );
+    }
+  };
+
   return (
     <div className="products_container">
-      <ProductAdder />
+      <div className="controls_container">
+        <select
+          className="product_filter"
+          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+            setFilterProduct(event.target.value)
+          }
+        >
+          <option value="All">All</option>
+          {uniqueCategories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+        <ProductAdder />
+      </div>
       <div className="featured_products">
-        {product.map(
-          (product, index) =>
-            product.rating >= 4.6 &&
-            product.stock > 0 && <Card key={index} product={product} />
-        )}
+        <div className="container_header">
+          <h2 className="container_title">Featured Products</h2>
+        </div>
+        <div className="container_body">
+          {product.map(
+            (item, index) =>
+              item.rating >= 4.6 &&
+              item.stock > 0 && <Card key={index} product={item} />
+          )}
+        </div>
       </div>
 
       <div className="product_list">
-        {product.length === 0 ? (
-          <p>Product is Empty</p>
-        ) : (
-          product.map(
-            (product, index) =>
-              product.stock > 0 && <Card key={index} product={product}/>
-          )
-        )}
+        <div className="container_header">
+          <h2 className="container_title">Product List</h2>
+        </div>
+        <div className="container_body">{handleFiltering()}</div>
       </div>
     </div>
   );
