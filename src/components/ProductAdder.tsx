@@ -67,6 +67,7 @@ function ProductAdder() {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setNewProduct({ ...newProduct!, name: event.target.value })
             }
+            placeholder="e.g. Wireless Bluetooth Headphones"
           />
 
           <label htmlFor="product_description">Description:</label>
@@ -79,6 +80,7 @@ function ProductAdder() {
                 description: event.target.value,
               })
             }
+            placeholder="Briefly describe the product features, materials, or usage"
           />
 
           <label htmlFor="product_specification">Specification:</label>
@@ -93,6 +95,7 @@ function ProductAdder() {
                   .map((cat) => cat.trim()),
               })
             }
+            placeholder="Separate each specification with commas (,)"
           />
 
           <div className="numeric_row">
@@ -111,6 +114,7 @@ function ProductAdder() {
                     price: Number(event.target.value),
                   })
                 }
+                placeholder="e.g. 59.99"
               />
             </div>
 
@@ -127,6 +131,7 @@ function ProductAdder() {
                     stock: Number(event.target.value),
                   })
                 }
+                placeholder="e.g. 120"
               />
             </div>
             
@@ -145,6 +150,7 @@ function ProductAdder() {
                     rating: Number(event.target.value),
                   })
                 }
+                placeholder="1-5"
               />
             </div>
           </div>
@@ -162,6 +168,7 @@ function ProductAdder() {
                   .map((cat) => cat.trim()),
               })
             }
+            placeholder="e.g. Electronics, Audio, Accessories"
           />
 
           <span className="form-buttons">
